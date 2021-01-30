@@ -38,7 +38,7 @@ namespace Facebook.POC.TestCore.Helpers
 
             var rawUsers = usersSection.GetChildren().ToList();
 
-            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("Name").Value, x.GetSection("Email").Value, x.GetSection("Password").Value)));
+            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("FirstName").Value, x.GetSection("LastName").Value, x.GetSection("Email").Value, x.GetSection("Password").Value)));
 
             return users;
         }
