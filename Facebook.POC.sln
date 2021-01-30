@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facebook.POC.TestCore", "Facebook.POC.TestCore\Facebook.POC.TestCore.csproj", "{1CB55A99-004D-40D4-AC01-39C5E97BFAF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facebook.POC.API", "Facebook.POC.API\Facebook.POC.API.csproj", "{4BE3BF41-040A-44FB-B217-527770F76E73}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4} = {1CB55A99-004D-40D4-AC01-39C5E97BFAF4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facebook.POC.UI", "Facebook.POC.UI\Facebook.POC.UI.csproj", "{9D0D0690-512D-46F5-97D5-C486206EE3B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4} = {1CB55A99-004D-40D4-AC01-39C5E97BFAF4}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB55A99-004D-40D4-AC01-39C5E97BFAF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE3BF41-040A-44FB-B217-527770F76E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE3BF41-040A-44FB-B217-527770F76E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE3BF41-040A-44FB-B217-527770F76E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE3BF41-040A-44FB-B217-527770F76E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D0D0690-512D-46F5-97D5-C486206EE3B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D0D0690-512D-46F5-97D5-C486206EE3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D0D0690-512D-46F5-97D5-C486206EE3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0D0690-512D-46F5-97D5-C486206EE3B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31D7F0DD-294D-496E-A609-A3E7E26D08A5}
+	EndGlobalSection
+EndGlobal
