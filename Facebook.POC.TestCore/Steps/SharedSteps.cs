@@ -28,6 +28,13 @@ namespace Facebook.POC.TestCore.Steps
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
 
+        [Given(@"the ""(.*)"" page is opened")]
+        public void GivenThePageIsOpened(string pocPageName)
+        {
+            this.GetElementOnPage("Pages", "button", "Navigation", "menu").Click();
+            this.GetPocPageByName(pocPageName).Click();
+        }
+
         /// <summary>
         /// NUnit Assert and Fluent Assertions are used in this method for demonstration purposes only.
         /// There are no preferences to use only one of these approaches, they are equivalent.
