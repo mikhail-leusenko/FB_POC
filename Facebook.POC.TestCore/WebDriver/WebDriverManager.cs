@@ -48,6 +48,7 @@ namespace Facebook.POC.TestCore.WebDriver
                         var chromeOptions = new ChromeOptions();
                         chromeOptions.AddArgument("--allow-insecure-localhost");
                         chromeOptions.AddArgument("disable-popup-blocking");
+                        chromeOptions.AddArgument("--disable-notifications");
 
                         this.Driver = new ChromeDriver(chromeOptions);
                         this.Driver.Manage().Window.Maximize();

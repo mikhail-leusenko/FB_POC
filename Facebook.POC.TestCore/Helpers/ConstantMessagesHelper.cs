@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Facebook.POC.TestCore.Helpers
 {
-    public class ConstantMessagesHelper
+    public class ConstantmessagesHelper
     {
-        public static string GetConstantMessage(string value)
+        public static string GetConstantmessage(string value)
         {
             var constantObject = ConvertToObject(value);
 
@@ -26,7 +26,7 @@ namespace Facebook.POC.TestCore.Helpers
             value = value.Trim();
 
             
-            var constants = new Constants.Constants.Messages();
+            var constants = new Constants.Constants.messages();
             var properties = constants.GetType().GetProperties();
 
             for (int i = 0; i < properties.Length; i++)

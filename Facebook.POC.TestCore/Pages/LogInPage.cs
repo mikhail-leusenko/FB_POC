@@ -13,7 +13,7 @@ namespace Facebook.POC.TestCore.Pages
 
         [ElementName(@"LogIn field")]
         public IWebElement LogInField =>
-            this.WaitElementByCss("input[id='email']");
+            this.Wrapper.WaitElementByCss("input[id='email']");
 
         [ElementName(@"Password field")]
         public IWebElement PasswordField =>
@@ -24,11 +24,11 @@ namespace Facebook.POC.TestCore.Pages
             this.Driver.FindElement(By.CssSelector("button[name='login']"));
 
         [ElementName(@"Invalid Login error message")]
-        public IWebElement InvalidLoginErrorMessage =>
+        public IWebElement InvalidLoginErrormessage =>
             this.Driver.FindElement(By.CssSelector("#email_container > div ~ div"));
 
         [ElementName(@"Invalid Password error message")]
-        public IWebElement InvalidPasswordErrorMessage =>
+        public IWebElement InvalidPasswordErrormessage =>
             this.Driver.FindElement(By.CssSelector("input[type='password'] ~ div ~ div"));
 
     }

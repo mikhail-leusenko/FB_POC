@@ -38,7 +38,7 @@ namespace Facebook.POC.TestCore.Helpers
 
             var rawUsers = usersSection.GetChildren().ToList();
 
-            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("FirstName").Value, x.GetSection("LastName").Value, x.GetSection("Email").Value, x.GetSection("Password").Value)));
+            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("FirstName").Value, x.GetSection("LastName").Value, x.GetSection("Email").Value, x.GetSection("Password").Value, x.GetSection("Id").Value)));
 
             return users;
         }
@@ -50,6 +50,26 @@ namespace Facebook.POC.TestCore.Helpers
         public string GetApplicationUrl()
         {
             return this.GetCurrentConfiguration().GetValue<string>(@"ApplicationUrl");
+        }
+
+        public string GetApiApplicationUrl()
+        {
+            return GetCurrentConfiguration().GetSection("ApiUrl").Value;
+        }
+
+        public string GetApplicationId()
+        {
+            return GetCurrentConfiguration().GetSection("ApplicationId").Value;
+        }
+
+        public string GetClientSecret()
+        {
+            return GetCurrentConfiguration().GetSection("ClientSecret").Value;
+        }
+
+        public string GetPageId()
+        {
+            return GetCurrentConfiguration().GetSection("PageId").Value;
         }
     }
 }

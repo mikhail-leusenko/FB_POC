@@ -28,19 +28,30 @@ namespace Facebook.POC.TestCore.Steps
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
 
-        [Given(@"the ""(.*)"" page is opened")]
-        public void GivenThePageIsOpened(string pocPageName)
+        [Given(@"the ""(.*)"" (?:page|screen) is opened")]
+        public void GivenThePageIsOpened(string pageName)
         {
             this.GetElementOnPage("Pages", "button", "Navigation", "menu").Click();
-            this.GetPocPageByName(pocPageName).Click();
+            this.GetPocPageByName(pageName).Click();
         }
+
+        [Given(@"the ""(.*)"" screen is opened from the Linked Pages")]
+        public async Task GivenTheScreenIsOpenedFromTheLinkedPages(string pageName)
+        {
+            this.GetElementOnPage("Pages", "button", "Navigation", "menu").Click();
+
+            await this.JavaScriptClick(this.GetElementOnPage("Linked Pages", "menu item", "Pages", "screen"));
+
+            this.GetPocPageByName(pageName).Click();
+        }
+
 
         /// <summary>
         /// NUnit Assert and Fluent Assertions are used in this method for demonstration purposes only.
         /// There are no preferences to use only one of these approaches, they are equivalent.
         /// </summary>
         [Then(@"the ""(.*)"" (message|field|button|checkbox|radiobutton|error message) is displayed on ""(.*)"" (page|screen)")]
-        public void ThenTheMessageIsDisplayedOnPage(string elementName, string elementType, string pageName, string pageType)
+        public void ThenThemessageIsDisplayedOnPage(string elementName, string elementType, string pageName, string pageType)
         {
             var element = this.GetElementOnPage(elementName, elementType, pageName, pageType);
 
@@ -48,9 +59,9 @@ namespace Facebook.POC.TestCore.Steps
 
             if (elementType.Contains("message"))
             {
-                var expectedMessage = ConstantMessagesHelper.GetConstantMessage(elementName + " " + elementType);
+                var expectedmessage = ConstantmessagesHelper.GetConstantmessage(elementName + " " + elementType);
 
-                element.Text.Should().Contain(expectedMessage);
+                element.Text.Should().Contain(expectedmessage);
             }
         }
     }

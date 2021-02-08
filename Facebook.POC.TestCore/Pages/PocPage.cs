@@ -1,9 +1,7 @@
 ﻿using Facebook.POC.TestCore.Attributes;
 using Facebook.POC.TestCore.Pages.Base;
 using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Pages
@@ -16,11 +14,15 @@ namespace Facebook.POC.TestCore.Pages
 
         [ElementName(@"Create Post button")]
         public IWebElement CreatePostButton =>
-            this.Driver.FindElement(By.CssSelector("div[aria-label='Create Post']"));
+            this.Wrapper.WaitElementByCss("div[aria-label='Create Post']", 30);
 
         [ElementName(@"Actions For This Post dropdown")]
         public IWebElement ActionsForThisPostDropdown =>
-            this.Driver.FindElement(By.CssSelector("div[role='banner'] ~ div div[data-pagelet='root'] div[role='menu'] > div > div > div:nth-child(1) > div"));
+            this.Wrapper.WaitElementByCss("div[role='banner'] ~ div div[data-pagelet='root'] div[role='menu'] > div > div > div:nth-child(1) > div");
+
+        [ElementName(@"Post Actions list")]
+        public IReadOnlyCollection<IWebElement> PostActionsList =>
+            ActionsForThisPostDropdown.FindElements(By.CssSelector("div > div:nth-child(2) > div > div > span"));
 
         [ElementName(@"Edit Post option")]
         public IWebElement EditPostOption =>
@@ -35,11 +37,22 @@ namespace Facebook.POC.TestCore.Pages
         /// </summary>
         [ElementName(@"Page Posts")]
         public IReadOnlyCollection<IWebElement> PagePosts =>
-            this.WaitElementsByCss("div[aria-label='Page Admin Content'] > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(3) > div > div > div");
+            this.Wrapper.WaitElementsByCss("div[aria-label='Page Admin Content'] > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(3) > div > div > div > div  > div > div > div");
 
-        [ElementName(@"Post")]
-        public IWebElement PostI(int i) =>
-            this.Driver.FindElement(By.CssSelector($"selector {i}"));
+        [ElementName(@"Subscriber Page Posts")]
+        public IReadOnlyCollection<IWebElement> SubscriberPagePosts =>
+            this.Wrapper.WaitElementsByCss("div[role='article']");
 
+        [ElementName(@"Create Post pop-up")]
+        public IWebElement CreatePostPopUp =>
+            this.Wrapper.WaitElementByCss("form[method='POST']");
+
+        [ElementName(@"Manage Page Navigation Menu")]
+        public IWebElement ManagePageNavigationMenu =>
+            this.Driver.FindElement(By.CssSelector("div[aria-label='Page Header and Tools Navigation']"));
+
+        [ElementName(@"Comment Actions list")]
+        public IReadOnlyCollection<IWebElement> CommentActionsList =>
+            this.Wrapper.WaitElementsByCss("div[data-pagelet='root'] > div[role='menu'] > div:nth-child(1) > div > div:nth-child(1) > div > div span");
     }
 }

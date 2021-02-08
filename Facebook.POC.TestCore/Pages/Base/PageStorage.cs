@@ -1,7 +1,4 @@
 ﻿using Facebook.POC.TestCore.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Pages.Base
@@ -31,5 +28,14 @@ namespace Facebook.POC.TestCore.Pages.Base
 
         [PageName(@"POC page")]
         public BasePage PocPage => new PocPage(this.ScenarioContext);
+
+        [PageName(@"Create Post pop-up")]
+        public BasePage CreatePostPopUp => new CreatePostPopUp(this.ScenarioContext);
+
+        [PageName(@"Edit Post pop-up")]
+        public BasePage EditPostPopUp => new EditPostPopUp(this.ScenarioContext);
+
+        [PageName(@"Delete Post pop-up")]
+        public BasePage DeletePostPopUp => new DeletePostPopUp(this.ScenarioContext);
     }
 }

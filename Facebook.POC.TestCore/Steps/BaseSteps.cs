@@ -1,9 +1,12 @@
 ﻿using Facebook.POC.TestCore.Helpers;
+using Facebook.POC.TestCore.Pages.Base;
+using Facebook.POC.TestCore.Wrappers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
@@ -18,12 +21,15 @@ namespace Facebook.POC.TestCore.Steps
         public ApplicationConfigurationHelper ConfigurationHelper { get; }
         public string ApplicationUrl { get; }
 
+        public WebElementWrapper Wrapper { get; }
+
         public BaseSteps(ScenarioContext scenarioContext)
         {
             this.ScenarioContext = scenarioContext;
             this.Driver = this.ScenarioContext.Get<IWebDriver>();
             this.ConfigurationHelper = new ApplicationConfigurationHelper();
             this.ApplicationUrl = this.ConfigurationHelper.GetApplicationUrl();
+            this.Wrapper = new WebElementWrapper(this.ScenarioContext);
         }
 
         /// <summary>
@@ -91,19 +97,219 @@ namespace Facebook.POC.TestCore.Steps
             element.SendKeys(value);
         }
 
+
+        /// <summary>
+        /// Gets the specified page on Pages screen.
+        /// </summary>
+        /// <param name="elementName">Page name to find.</param>
+        /// <returns>The IWebElement representation to navigate to the specified page.</returns>
         public IWebElement GetPocPageByName(string elementName)
         {
-            return this.Driver.FindElement(By.CssSelector($"a[aria-label='{elementName}']"));
+            return this.Wrapper.WaitElementByCss($"a[aria-label='{elementName}']");
         }
 
-        public void ClickOnActionOfPost(IWebElement post, int indexOfPost)
+        /// <summary>
+        /// Cliks on action button of post by index.
+        /// </summary>
+        /// <param name="indexOfPost">Index of post in feed.</param>
+        public void ClickOnActionOfPost(int indexOfPost)
         {
-            post.FindElement(By.CssSelector($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(2) > div > div:nth-child(3)")).Click();
+            this.Wrapper.WaitElementByCss($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(2) > div > div:nth-child(3)").Click();
         }
 
-        public string GetPostContent(IWebElement post, int indexOfPost)
+        /// <summary>
+        /// Get post content.
+        /// </summary>
+        /// <param name="indexOfPost">Index of post in feed.</param>
+        /// <returns>The string representation of post content.</returns>
+        public string GetPostmessageByIndex(int indexOfPost)
         {
-            return post.FindElement(By.CssSelector($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(3) > div > div > div > div")).Text;
+            return this.Wrapper.WaitElementByCss($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(3) > div > div > div > div").Text;
+        }
+
+        /// <summary>
+        /// Set the post comment.
+        /// </summary>
+        /// <param name="postMessage">message of post to comment.</param>
+        /// <param name="commentText">Text to type into the post comment.</param>
+        public void SetPostCommentByMessage(string postMessage, string commentText)
+        {
+            SetPostCommentByIndex(GetPostIndexByMessage(postMessage), commentText);
+        }
+
+        /// <summary>
+        /// Set the post comment.
+        /// </summary>
+        /// <param name="postIndex">Index of post in feed.</param>
+        /// <param name="commentText">Text to type into the post comment.</param>
+        public void SetPostCommentByIndex(int postIndex, string commentText)
+        {
+            this.Wrapper.WaitElementByCss($"div[aria-posinset='{postIndex}'] div[aria-label='Leave a comment']").Click();
+            IWebElement commentField = this.Wrapper.WaitElementByCss($"div[aria-posinset='{postIndex}'] div[aria-label='Write a comment']");
+
+            commentField.SendKeys(commentText);
+            commentField.SendKeys(Keys.Enter);
+        }
+
+        /// <summary>
+        /// Get the collection of post comments values.
+        /// </summary>
+        /// <param name="postIndex">Index of post in feed.</param>
+        /// <returns>The List of string representations of comments.</returns>
+        public List<string> GetPostCommentsTextByPostIndex(int postIndex)
+        {
+            var postComments = GetPostCommentsByPostIndex(postIndex);
+            return postComments.Select(x => x.FindElement(By.CssSelector("span[dir='auto']>div>div[dir='auto']")).Text).ToList();
+        }
+
+        /// <summary>
+        /// Get the collection of post comments values.
+        /// </summary>
+        /// <param name="postMessage">message of post to get comments.</param>
+        /// <returns>The List of string representations of comments.</returns>
+        public List<string> GetPostCommenstTextByPostMessage(string postMessage)
+        {
+            return this.GetPostCommentsTextByPostIndex(GetPostIndexByMessage(postMessage));
+        }
+
+        /// <summary>
+        /// Get the collection of post comments IWebElements.
+        /// </summary>
+        /// <param name="postIndex">Index of post in feed.</param>
+        /// <returns>The list of IWebElements of corresponding comments.</returns>
+        public List<IWebElement> GetPostCommentsByPostIndex(int postIndex)
+        {
+            List<IWebElement> postComments = new List<IWebElement>();
+            try
+            {
+                postComments = this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(5) > div > div > div:nth-child(2) > ul > li", 5).ToList();
+            }
+            catch(WebDriverTimeoutException ex)
+            {
+                if(ex.InnerException is NoSuchElementException)
+                {
+                    postComments = this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2) > ul > li").ToList();
+                }
+            }
+
+            return postComments;
+        }
+
+        /// <summary>
+        /// Get the collection of post comments IWebElements.
+        /// </summary>
+        /// <param name="postMessage">message of post to get comments.</param>
+        /// <returns>The list of IWebElements of corresponding comments.</returns>
+        public List<IWebElement> GetPostCommentsByPostMessage(string postMessage)
+        {
+            return this.GetPostCommentsByPostIndex(GetPostIndexByMessage(postMessage));
+        }
+
+        /// <summary>
+        /// Get single comment IWebElement by its index.
+        /// </summary>
+        /// <param name="postComments">The collection of comments IWebElements.</param>
+        /// <param name="commentIndex">The index of required comment.</param>
+        /// <returns>The single comment IWebElement.</returns>
+        public IWebElement GetCommentByIndex(List<IWebElement> postComments, int commentIndex)
+        {
+            return postComments.ElementAt(commentIndex);
+        }
+
+        /// <summary>
+        /// Get single comment IWebElement by its text.
+        /// </summary>
+        /// <param name="postComments">The collection of comments IWebElements.</param>
+        /// <param name="commentText">The text of required comment.</param>
+        /// <returns>The single comment IWebElement.</returns>
+        public IWebElement GetCommentByCommentText(List<IWebElement> postComments, string commentText)
+        {
+            return postComments.FirstOrDefault(x => x.FindElement(By.CssSelector("span[dir='auto'] > div > div[dir='auto']")).Text == commentText);
+        }
+
+        /// <summary>
+        /// Click on the actions of specified comment.
+        /// </summary>
+        /// <param name="comment">Comment to perfrom some actions.</param>
+        public void ClickOnActionsOfComment(IWebElement comment)
+        {
+            comment.FindElement(By.CssSelector("div[aria-label='Edit or delete this']")).Click();
+        }
+
+        /// <summary>
+        /// Get author of comment.
+        /// </summary>
+        /// <param name="comment">IWebElement representation of required comment.</param>
+        /// <returns>The string representation of auhtor name.</returns>
+        public string GetAuthorOfComment(IWebElement comment)
+        {
+            return comment.FindElement(By.CssSelector("a > span > span")).Text;
+        }
+
+        /// <summary>
+        /// Get message of singel comment.
+        /// </summary>
+        /// <param name="comment">IWebElement representation of required comment.</param>
+        /// <returns>The string representation of comment message.</returns>
+        public string GetmessageOfComment(IWebElement comment)
+        {
+            return comment.FindElement(By.CssSelector("span[dir='auto'] > div > div[dir='auto']")).Text;
+        }
+
+        /// <summary>
+        /// Get the index of post by its message.
+        /// </summary>
+        /// <param name="message">Required Post message.</param>
+        /// <returns>The index of post with specified message.</returns>
+        public int GetPostIndexByMessage(string message)
+        {
+            List<IWebElement> pagePosts = new List<IWebElement>();
+
+            try
+            {
+                pagePosts = this.GetElementsOnPage("Page", "Posts", "POC", "page").ToList();
+            }
+            catch(TargetInvocationException ex)
+            {
+                if (ex.InnerException.InnerException is NoSuchElementException)
+                {
+                    var rawPagePosts = this.GetElementsOnPage("Subscriber Page", "Posts", "POC", "page").ToList();
+                    
+                    foreach(var rawPost in rawPagePosts)
+                    {
+                        try
+                        {
+                            if (rawPost.GetAttribute("aria-posinset").Any())
+                            {
+                                pagePosts.Add(rawPost);
+                            }
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            int postIndex = -1;
+
+            if (!pagePosts.Exists(post => post.FindElement(By.CssSelector("div[dir='auto'] > div > div > div")).Text == message))
+            {
+                throw new NoSuchElementException($"The Post with {message} message does not exist in feed.");
+            }
+
+            foreach (var post in pagePosts)
+            {
+                var postmessage = post.FindElement(By.CssSelector("div[dir='auto'] > div > div > div")).Text;
+
+                if (postmessage == message)
+                {
+                    postIndex = int.Parse(post.GetAttribute("aria-posinset"));
+                }
+            }
+
+            return postIndex;
         }
 
         private void SetPage(string pageName)

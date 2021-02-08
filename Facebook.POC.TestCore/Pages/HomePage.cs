@@ -12,7 +12,7 @@ namespace Facebook.POC.TestCore.Pages
         }
 
         [ElementName(@"Welcome message")]
-        public IWebElement WelcomeMessage =>
-            this.WaitElementByCss("#mount_0_0 div[role='main'] > div > div > div > span");
+        public IWebElement Welcomemessage =>
+            this.Wrapper.WaitElementByCss("#mount_0_0 div[role='main'] > div > div > div > span");
     }
 }

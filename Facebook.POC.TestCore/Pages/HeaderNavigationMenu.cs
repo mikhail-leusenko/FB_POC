@@ -1,9 +1,6 @@
 ﻿using Facebook.POC.TestCore.Attributes;
 using Facebook.POC.TestCore.Pages.Base;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Pages
