@@ -1,9 +1,6 @@
 ﻿using Facebook.POC.TestCore.Attributes;
 using Facebook.POC.TestCore.Pages.Base;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Pages
@@ -20,7 +17,7 @@ namespace Facebook.POC.TestCore.Pages
 
         [ElementName(@"Delete button")]
         public IWebElement DeleteButton =>
-            this.Wrapper.WaitElementByCss("div[aria-label='Delete']");
+            this.Wrapper.WaitElementByCss("div[aria-label='Delete'][tabindex='0']");
 
         [ElementName(@"Cancel button")]
         public IWebElement CancelButton =>

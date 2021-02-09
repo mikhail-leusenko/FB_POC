@@ -24,8 +24,8 @@ namespace Facebook.POC.TestCore.Pages
             this.Wrapper.WaitElementByCss("div[aria-label='Close']");
 
         [ElementName(@"Post message field")]
-        public IWebElement PostmessageField =>
-            this.Wrapper.WaitElementByCss("div[role='textbox'][contenteditable='true']");
+        public IWebElement PostMessageField =>
+            this.Wrapper.WaitElementByCss("div[role='presentation'] div[role='textbox'][contenteditable='true']", 30);
 
         [ElementName(@"Post button")]
         public IWebElement PostButton =>

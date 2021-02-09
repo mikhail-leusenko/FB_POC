@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Wrappers

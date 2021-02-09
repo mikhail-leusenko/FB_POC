@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Facebook.POC.TestCore.Models
+﻿namespace Facebook.POC.TestCore.Models
 {
     public class User
     {

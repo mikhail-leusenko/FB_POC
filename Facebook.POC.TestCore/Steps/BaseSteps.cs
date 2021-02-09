@@ -1,5 +1,4 @@
 ﻿using Facebook.POC.TestCore.Helpers;
-using Facebook.POC.TestCore.Pages.Base;
 using Facebook.POC.TestCore.Wrappers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -97,6 +95,38 @@ namespace Facebook.POC.TestCore.Steps
             element.SendKeys(value);
         }
 
+        /// <summary>
+        /// Workaround method to clear the post message.
+        /// Need to be used to fully emulate the user iteractions.
+        /// Default IWebElement.Clear() does not work because application uses event based field update.
+        /// </summary>
+        /// <param name="postMessage">IWebElement representation of post message.</param>
+        /// <param name="newMessage">Message to replace the original one.</param>
+        public void ChangeThePostMessage(IWebElement postMessage, string newMessage)
+        {
+            int postMessageLength = postMessage.Text.Length;
+
+            for (int i = 0; i < postMessageLength; i ++)
+            {
+                postMessage.Click();
+                postMessage.SendKeys(Keys.Backspace);
+            }
+
+            IJavaScriptExecutor javaScriptExecutor = (IJavaScriptExecutor)this.Driver;
+
+            javaScriptExecutor.ExecuteScript("arguments[0].click();", postMessage);
+
+            try
+            {
+                postMessage.Click();
+                postMessage.SendKeys(newMessage);
+            }
+            catch(ElementNotInteractableException)
+            {
+                
+                javaScriptExecutor.ExecuteScript($"arguments[0].click(); arguments[0].setAttribuite('value','{newMessage}');", postMessage);
+            }
+        }
 
         /// <summary>
         /// Gets the specified page on Pages screen.
@@ -105,7 +135,7 @@ namespace Facebook.POC.TestCore.Steps
         /// <returns>The IWebElement representation to navigate to the specified page.</returns>
         public IWebElement GetPocPageByName(string elementName)
         {
-            return this.Wrapper.WaitElementByCss($"a[aria-label='{elementName}']");
+            return this.Wrapper.WaitElementByCss($"a[aria-label='{elementName}']", 30);
         }
 
         /// <summary>
@@ -114,7 +144,7 @@ namespace Facebook.POC.TestCore.Steps
         /// <param name="indexOfPost">Index of post in feed.</param>
         public void ClickOnActionOfPost(int indexOfPost)
         {
-            this.Wrapper.WaitElementByCss($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(2) > div > div:nth-child(3)").Click();
+            this.Wrapper.WaitElementByCss($"div[aria-posinset='{indexOfPost}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(2) > div > div:nth-child(3)", 30).Click();
         }
 
         /// <summary>
@@ -179,17 +209,25 @@ namespace Facebook.POC.TestCore.Steps
         /// <returns>The list of IWebElements of corresponding comments.</returns>
         public List<IWebElement> GetPostCommentsByPostIndex(int postIndex)
         {
+            string visitorPath = " > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2) > ";
+            string adminPath = " > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(5) > div > div > div:nth-child(2) > ";
+            
+
             List<IWebElement> postComments = new List<IWebElement>();
             try
             {
-                postComments = this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(5) > div > div > div:nth-child(2) > ul > li", 5).ToList();
+                postComments = this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}']{adminPath}ul > li", 5).ToList();
             }
             catch(WebDriverTimeoutException ex)
             {
                 if(ex.InnerException is NoSuchElementException)
                 {
-                    postComments = this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}'] > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2) > ul > li").ToList();
+                    postComments = TryGetPostComments(postIndex, adminPath, visitorPath);
                 }
+            }
+            catch(NoSuchElementException)
+            {
+                postComments = TryGetPostComments(postIndex, adminPath, visitorPath);
             }
 
             return postComments;
@@ -263,6 +301,8 @@ namespace Facebook.POC.TestCore.Steps
         /// <returns>The index of post with specified message.</returns>
         public int GetPostIndexByMessage(string message)
         {
+            this.Driver.Navigate().Refresh();
+
             List<IWebElement> pagePosts = new List<IWebElement>();
 
             try
@@ -317,5 +357,39 @@ namespace Facebook.POC.TestCore.Steps
             this.ScenarioContext.Set(PageNavigationHelper.GetPage(this.ScenarioContext, pageName));
             this.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(3000);
         }
-    }
+
+        private List<IWebElement> TryGetPostComments(int postIndex, string adminPath, string visitorPath)
+        {
+            try
+            {
+                this.Wrapper.WaitElementByCss($"div[aria-posinset = '{postIndex}']{adminPath}div:nth-child(5) div[role='button']").Click();
+                return this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}']{adminPath}ul:nth-child(5) > li").ToList();
+            }
+            catch (NoSuchElementException)
+            {
+                this.Wrapper.WaitElementByCss($"div[aria-posinset = '{postIndex}']{visitorPath}div:nth-child(5) div[role='button']").Click();
+                return this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}']{visitorPath}ul:nth-child(5) > li").ToList();
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                if (ex.InnerException is NoSuchElementException)
+                {
+                    try
+                    {
+                        return this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}']{visitorPath}ul:nth-child(5) > li").ToList();
+                    }
+                    catch(WebDriverTimeoutException ex1)
+                    {
+                        if (ex1.InnerException is NoSuchElementException)
+                        {
+                            this.Wrapper.WaitElementByCss($"div[aria-posinset = '{postIndex}']{visitorPath}div:nth-child(5) div[role='button']").Click();
+                            return this.Wrapper.WaitElementsByCss($"div[aria-posinset = '{postIndex}']{visitorPath}ul:nth-child(5) > li").ToList();
+                        }
+                    }
+                }
+            }
+
+            return new List<IWebElement>();
+        }
+    }   
 }

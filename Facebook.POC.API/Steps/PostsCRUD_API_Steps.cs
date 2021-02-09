@@ -1,6 +1,5 @@
 ﻿using Facebook.POC.TestCore.Helpers;
 using Facebook.POC.TestCore.Services;
-using Facebook.POC.TestCore.Steps;
 using NUnit.Framework;
 using System;
 using System.Linq;

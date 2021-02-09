@@ -29,6 +29,9 @@ namespace Facebook.POC.TestCore.Pages.Base
         [PageName(@"POC page")]
         public BasePage PocPage => new PocPage(this.ScenarioContext);
 
+        [PageName(@"Visitor POC page")]
+        public BasePage VisitorPocPage => new VisitorPocPage(this.ScenarioContext);
+
         [PageName(@"Create Post pop-up")]
         public BasePage CreatePostPopUp => new CreatePostPopUp(this.ScenarioContext);
 

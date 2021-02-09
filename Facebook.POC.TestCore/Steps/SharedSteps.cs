@@ -1,13 +1,8 @@
 ﻿using Facebook.POC.TestCore.Helpers;
-using Facebook.POC.TestCore.Models;
-using Facebook.POC.TestCore.Steps;
 using FluentAssertions;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -29,10 +24,10 @@ namespace Facebook.POC.TestCore.Steps
         }
 
         [Given(@"the ""(.*)"" (?:page|screen) is opened")]
-        public void GivenThePageIsOpened(string pageName)
+        public async Task GivenThePageIsOpened(string pageName)
         {
             this.GetElementOnPage("Pages", "button", "Navigation", "menu").Click();
-            this.GetPocPageByName(pageName).Click();
+            await this.JavaScriptClick(this.GetPocPageByName(pageName));
         }
 
         [Given(@"the ""(.*)"" screen is opened from the Linked Pages")]

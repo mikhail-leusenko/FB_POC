@@ -1,5 +1,4 @@
-﻿
-namespace Facebook.POC.TestCore.Models.ResponseModels
+﻿namespace Facebook.POC.TestCore.Models.ResponseModels
 {
     public class Category
     {

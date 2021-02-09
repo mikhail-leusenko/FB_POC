@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.UI.Steps
@@ -26,13 +27,19 @@ namespace Facebook.POC.UI.Steps
         }
 
         [Then(@"the ""(.*)"" user is specified as ""(.*)"" Posts ""(.*)"" comment author")]
-        public void ThenTheUserIsSpecifiedAsCommentAuthor(string userName, string postmessage, string commentmessage)
+        public async Task ThenTheUserIsSpecifiedAsCommentAuthor(string userName, string postmessage, string commentmessage)
         {
+            this.Driver.Navigate().Refresh();
+
+            await Task.Delay(TimeSpan.FromSeconds(3));
+
             var users = this.ConfigurationHelper.GetUsers().Values;
 
             var user = users.FirstOrDefault(u => u.FirstName == userName);
 
-            var expectedUserName = user.FirstName + " " + user.LastName;
+            var expectedUserName = user.FirstName == "Visitor" ?
+                user.FirstName + " " + user.LastName :
+                "POC Page";
 
             var postComments = this.GetPostCommentsByPostMessage(postmessage);
 
@@ -44,7 +51,5 @@ namespace Facebook.POC.UI.Steps
                 $"The expected user name is \"{expectedUserName}\".{Environment.NewLine}" +
                 $"The actual user name is \"{commentAuthor}\"");
         }
-
-
     }
 }

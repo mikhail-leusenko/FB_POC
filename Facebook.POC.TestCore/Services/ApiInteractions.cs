@@ -52,7 +52,16 @@ namespace Facebook.POC.TestCore.Services
 
         public PageAccessTokenResponseModel GetPageAccessToken(string userName)
         {
-            return JsonConvert.DeserializeObject<PageAccessTokenResponseModel>(GET_GetPageAccessToken(userName).Content);
+            string responseContent;
+            try
+            {
+                responseContent = GET_GetPageAccessToken(userName).Content;
+            }
+            catch(NullReferenceException ex)
+            {
+                throw ex;
+            }
+            return JsonConvert.DeserializeObject<PageAccessTokenResponseModel>(responseContent);
         }
 
         public IRestResponse GET_GetPageAccessToken(string userName)
@@ -64,12 +73,19 @@ namespace Facebook.POC.TestCore.Services
 
             string userAccessToken = string.Empty;
 
-            foreach (var testUser in testUsers)
+            try
             {
-                if (testUser.Id == user.UserId)
+                foreach (var testUser in testUsers)
                 {
-                    userAccessToken = testUser.Access_token;
+                    if (testUser.Id == user.UserId)
+                    {
+                        userAccessToken = testUser.Access_token;
+                    }
                 }
+            }
+            catch(NullReferenceException ex)
+            {
+                throw ex;
             }
 
             var requestBody = $"{this.PageId}?fields=access_token&access_token={userAccessToken}";

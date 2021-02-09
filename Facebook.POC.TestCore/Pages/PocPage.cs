@@ -18,7 +18,7 @@ namespace Facebook.POC.TestCore.Pages
 
         [ElementName(@"Actions For This Post dropdown")]
         public IWebElement ActionsForThisPostDropdown =>
-            this.Wrapper.WaitElementByCss("div[role='banner'] ~ div div[data-pagelet='root'] div[role='menu'] > div > div > div:nth-child(1) > div");
+            this.Wrapper.WaitElementByCss("div[role='banner'] ~ div div[data-pagelet='root'] div[role='menu'] > div > div > div:nth-child(1) > div", 30);
 
         [ElementName(@"Post Actions list")]
         public IReadOnlyCollection<IWebElement> PostActionsList =>

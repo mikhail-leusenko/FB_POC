@@ -17,8 +17,6 @@ namespace Facebook.POC.TestCore.Pages
 
         [ElementName(@"Pages button")]
         public IWebElement PagesButton =>
-            this.Wrapper.WaitElementByCss("div[data-pagelet='LeftRail'] > div > div > div:nth-child(2) > ul > li:nth-child(2) > div a");
-
-
+            this.Wrapper.WaitElementByCss("div[data-pagelet='LeftRail'] > div > div > div:nth-child(2) > ul > li:nth-child(2) > div a", 30);
     }
 }

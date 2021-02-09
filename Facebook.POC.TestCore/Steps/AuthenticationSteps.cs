@@ -1,9 +1,4 @@
 ﻿using Facebook.POC.TestCore.Helpers;
-using Facebook.POC.TestCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.TestCore.Steps

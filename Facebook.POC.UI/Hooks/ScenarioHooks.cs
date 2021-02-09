@@ -2,9 +2,6 @@
 using Facebook.POC.TestCore.Services;
 using Facebook.POC.TestCore.WebDriver;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Facebook.POC.UI.Hooks
@@ -61,12 +58,22 @@ namespace Facebook.POC.UI.Hooks
         {
             var users = this.ConfigurationHelper.GetUsers().Values;
 
-            foreach(var user in users)
+            foreach (var user in users)
             {
-                var pageAccessToken = this.ApiInteractions.GetPageAccessToken(user.FirstName).Access_token;
+                string pageAccessToken;
+
+                try
+                {
+                    pageAccessToken = this.ApiInteractions.GetPageAccessToken(user.FirstName).Access_token;
+                }
+                catch (NullReferenceException)
+                {
+                    continue;
+                }
+
                 var userPosts = this.ApiInteractions.GetPagePosts(pageAccessToken);
 
-                if(userPosts != null)
+                if (userPosts != null)
                 {
                     userPosts.ForEach(x => this.ApiInteractions.DeletePost(pageAccessToken, x.Id));
                 }
