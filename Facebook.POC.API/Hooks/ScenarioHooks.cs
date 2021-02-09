@@ -7,13 +7,11 @@ namespace Facebook.POC.API.Hooks
     [Binding]
     public sealed class ScenarioHooks
     {
-        private readonly ScenarioContext ScenarioContext;
         private readonly ApplicationConfigurationHelper ConfigurationHelper;
         private readonly ApiInteractions ApiInteractions;
 
         public ScenarioHooks(ScenarioContext scenarioContext)
         {
-            this.ScenarioContext = scenarioContext;
             this.ConfigurationHelper = new ApplicationConfigurationHelper();
             this.ApiInteractions = new ApiInteractions(this.ConfigurationHelper);
         }
@@ -34,6 +32,5 @@ namespace Facebook.POC.API.Hooks
                 }
             }
         }
-
     }
 }

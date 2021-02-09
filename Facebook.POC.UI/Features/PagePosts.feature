@@ -1,7 +1,7 @@
 ﻿@Posts
 Feature: PagePosts
 	As an Application admin
-	I want to be able to create, update and delete posts on Applicaton Page as a Page
+	I want to be able to create, update and delete posts on Application Page as a Page
 	So that I can manage the Posts in Page feed
 
 Background:

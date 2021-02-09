@@ -211,7 +211,6 @@ namespace Facebook.POC.TestCore.Steps
         {
             string visitorPath = " > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2) > ";
             string adminPath = " > div > div > div > div > div> div:nth-child(2) > div > div:nth-child(5) > div > div > div:nth-child(2) > ";
-            
 
             List<IWebElement> postComments = new List<IWebElement>();
             try

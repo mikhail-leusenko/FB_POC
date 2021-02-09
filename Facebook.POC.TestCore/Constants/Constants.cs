@@ -1,5 +1,4 @@
 ﻿using Facebook.POC.TestCore.Attributes;
-using System;
 
 namespace Facebook.POC.TestCore.Constants
 {

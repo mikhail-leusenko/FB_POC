@@ -30,6 +30,5 @@ namespace Facebook.POC.TestCore.Pages
         [ElementName(@"Invalid Password error message")]
         public IWebElement InvalidPasswordErrormessage =>
             this.Driver.FindElement(By.CssSelector("input[type='password'] ~ div ~ div"));
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿@Posts
 Feature: VisitorPosts
 	As an Application user
-	I want to be able to create, update and delete posts on Applicaton Page
+	I want to be able to create, update and delete posts on Application Page
 	So that I can manage my Posts in Page feed
 
 Background:

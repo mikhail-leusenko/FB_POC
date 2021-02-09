@@ -1,7 +1,5 @@
 ﻿using Facebook.POC.TestCore.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Facebook.POC.TestCore.Helpers
 {
@@ -24,7 +22,6 @@ namespace Facebook.POC.TestCore.Helpers
         private static object ConvertToObject(string value)
         {
             value = value.Trim();
-
             
             var constants = new Constants.Constants.messages();
             var properties = constants.GetType().GetProperties();

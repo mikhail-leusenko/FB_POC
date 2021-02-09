@@ -1,8 +1,8 @@
 ﻿@Comments
 Feature: PageCommentPost
 	As an Application admin
-	I want to be able to comment posts on Applicaton Page
-	So that I can share my oppinion regarding the Posts as a Page
+	I want to be able to comment posts on Application Page
+	So that I can share my opinion regarding the Posts as a Page
 
 Background:
 	Given the user starts the application

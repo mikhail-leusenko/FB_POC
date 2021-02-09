@@ -1,12 +1,14 @@
 ﻿Feature: PostsCRUD
-	Simple calculator for adding two numbers
+	As an Application Page admin user
+	I want to be able to manage Page post via API calls
+	So that I don't need to use UI
 
 @mytag
 Scenario: 1. When the post is created via API endpoint, then the response of the GET request to feed contains this post
 	When the "First" user sends create POST request with "Message" message
 	Then the post with "Message" message exists in response of GET posts request with ID specified in POST request response
 
-Scenario: 2. When the created post is updated via API endpoin, then the response of the GET request to feed contains the updated post with not updated ID
+Scenario: 2. When the created post is updated via API endpoint, then the response of the GET request to feed contains the updated post with not updated ID
 	When the "First" user sends create POST request with "Message" message
 		And the "First" user sends update POST request with "New Message" message
 	Then the post with "New Message" message exists in response of GET posts request with ID specified in POST request response

@@ -30,6 +30,5 @@ namespace Facebook.POC.TestCore.Pages
         [ElementName(@"Post button")]
         public IWebElement PostButton =>
             this.Wrapper.WaitElementByCss("div[aria-label='Post']");
-
     }
 }

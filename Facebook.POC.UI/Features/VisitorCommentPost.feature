@@ -1,8 +1,8 @@
 ﻿@Comments
 Feature: VisitorCommentPost
 	s an Application user
-	I want to be able to comment posts on Applicaton Page
-	So that I can share my oppinion regarding the Posts
+	I want to be able to comment posts on Application Page
+	So that I can share my opinion regarding the Posts
 
 
 Background:

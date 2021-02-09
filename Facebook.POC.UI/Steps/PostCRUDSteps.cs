@@ -13,7 +13,6 @@ namespace Facebook.POC.UI.Steps
     [Binding]
     public sealed class PostCRUDSteps : BaseSteps
     {
-
         public PostCRUDSteps(ScenarioContext scenarioContext) : base(scenarioContext)
         {
         }

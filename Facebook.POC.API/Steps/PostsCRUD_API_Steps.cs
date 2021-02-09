@@ -39,7 +39,6 @@ namespace Facebook.POC.API.Steps
                 default:
                     throw new NotImplementedException($"The specified {requestType} request type does not supported.");
             }
-            
         }
 
         [When(@"the user deleted the created post via DELETE request")]
@@ -97,7 +96,6 @@ namespace Facebook.POC.API.Steps
             this.ScenarioContext.Set(response.StatusCode.ToString(), "ResponseStatusCode");
         }
 
-
         [Then(@"the ""(.*)"" status code returns in response")]
         public void ThenTheStatusCodeReturnsInResponse(string statusCode)
         {
@@ -105,7 +103,6 @@ namespace Facebook.POC.API.Steps
 
             Assert.AreEqual(statusCode, actualStatusCode);
         }
-
 
         [Then(@"this post does not exist in the response of the GET request to feed")]
         public void ThenThisPostDoesNotExistInTheResponseOfTheGETRequestToFeed()

@@ -50,21 +50,37 @@ namespace Facebook.POC.TestCore.Helpers
             return this.GetCurrentConfiguration().GetValue<string>(@"ApplicationUrl");
         }
 
+        /// <summary>
+        /// Gets the API application URL.
+        /// </summary>
+        /// <returns>The string reperesentation of URL.</returns>
         public string GetApiApplicationUrl()
         {
             return GetCurrentConfiguration().GetSection("ApiUrl").Value;
         }
 
+        /// <summary>
+        /// Gets Application ID.
+        /// </summary>
+        /// <returns>The string reperesentation of Application ID.</returns>
         public string GetApplicationId()
         {
             return GetCurrentConfiguration().GetSection("ApplicationId").Value;
         }
 
+        /// <summary>
+        /// Gets Client Secret.
+        /// </summary>
+        /// <returns>The string reperesentation of Client Secret.</returns>
         public string GetClientSecret()
         {
             return GetCurrentConfiguration().GetSection("ClientSecret").Value;
         }
 
+        /// <summary>
+        /// Gets Page ID.
+        /// </summary>
+        /// <returns>The string reperesentation of Page ID.</returns>
         public string GetPageId()
         {
             return GetCurrentConfiguration().GetSection("PageId").Value;

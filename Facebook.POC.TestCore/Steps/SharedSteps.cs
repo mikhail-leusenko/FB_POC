@@ -19,7 +19,6 @@ namespace Facebook.POC.TestCore.Steps
         public async Task GivenTheUserStartsTheApplication()
         {
             this.ScenarioContext.Get<IWebDriver>().Navigate().GoToUrl(this.ApplicationUrl);
-
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
 
@@ -39,7 +38,6 @@ namespace Facebook.POC.TestCore.Steps
 
             this.GetPocPageByName(pageName).Click();
         }
-
 
         /// <summary>
         /// NUnit Assert and Fluent Assertions are used in this method for demonstration purposes only.

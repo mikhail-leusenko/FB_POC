@@ -47,7 +47,6 @@ namespace Facebook.POC.TestCore.Wrappers
             try
             {
                 var wait = new WebDriverWait(this.Driver, TimeSpan.FromSeconds(waitTime));
-
                 wait.Until(w => w.FindElement(By.CssSelector(@elementSelector)).Displayed);
 
                 return this.Driver.FindElements(By.CssSelector(@elementSelector));

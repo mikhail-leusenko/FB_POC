@@ -42,7 +42,7 @@ namespace Facebook.POC.TestCore.Services
 
         public ModifyPostResponseModel UpdatePost(string pageAccessToken, string postId, string message)
         {
-            return JsonConvert.DeserializeObject<ModifyPostResponseModel>(POST_UpdatePost( pageAccessToken, postId, message).Content);
+            return JsonConvert.DeserializeObject<ModifyPostResponseModel>(POST_UpdatePost(pageAccessToken, postId, message).Content);
         }
 
         public ModifyPostResponseModel DeletePost(string pageAccessToken, string postId)
@@ -57,7 +57,7 @@ namespace Facebook.POC.TestCore.Services
             {
                 responseContent = GET_GetPageAccessToken(userName).Content;
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 throw ex;
             }
@@ -83,7 +83,7 @@ namespace Facebook.POC.TestCore.Services
                     }
                 }
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 throw ex;
             }
@@ -109,7 +109,7 @@ namespace Facebook.POC.TestCore.Services
 
             IRestRequest request = new RestRequest(requestBody, Method.POST);
 
-           return this.RestClient.Execute(request);
+            return this.RestClient.Execute(request);
         }
 
         public IRestResponse POST_UpdatePost(string pageAccessToken, string postId, string message)
