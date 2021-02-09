@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Facebook.POC.TestCore.Models
+﻿namespace Facebook.POC.TestCore.Models
 {
     public class User
     {
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
 
-        public string UserEmail { get; set; }
-        
-        public string UserPassword { get; set; }
+        public string LastName { get; set; }
 
-        public User(string userName, string userEmail, string userPassword)
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+
+        public string UserId { get; set; }
+
+        public User(string firstName, string lastName, string email, string password, string userId)
         {
-            this.UserName = userName;
-            this.UserEmail = userEmail;
-            this.UserPassword = userPassword;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+            this.Password = password;
+            this.UserId = userId;
         }
     }
 }

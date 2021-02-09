@@ -1,7 +1,5 @@
 ﻿using Facebook.POC.TestCore.Models;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace Facebook.POC.TestCore.Helpers
@@ -38,7 +36,7 @@ namespace Facebook.POC.TestCore.Helpers
 
             var rawUsers = usersSection.GetChildren().ToList();
 
-            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("Name").Value, x.GetSection("Email").Value, x.GetSection("Password").Value)));
+            rawUsers.ForEach(x => users.Add(x.Key, new User(x.GetSection("FirstName").Value, x.GetSection("LastName").Value, x.GetSection("Email").Value, x.GetSection("Password").Value, x.GetSection("Id").Value)));
 
             return users;
         }
@@ -50,6 +48,42 @@ namespace Facebook.POC.TestCore.Helpers
         public string GetApplicationUrl()
         {
             return this.GetCurrentConfiguration().GetValue<string>(@"ApplicationUrl");
+        }
+
+        /// <summary>
+        /// Gets the API application URL.
+        /// </summary>
+        /// <returns>The string reperesentation of URL.</returns>
+        public string GetApiApplicationUrl()
+        {
+            return GetCurrentConfiguration().GetSection("ApiUrl").Value;
+        }
+
+        /// <summary>
+        /// Gets Application ID.
+        /// </summary>
+        /// <returns>The string reperesentation of Application ID.</returns>
+        public string GetApplicationId()
+        {
+            return GetCurrentConfiguration().GetSection("ApplicationId").Value;
+        }
+
+        /// <summary>
+        /// Gets Client Secret.
+        /// </summary>
+        /// <returns>The string reperesentation of Client Secret.</returns>
+        public string GetClientSecret()
+        {
+            return GetCurrentConfiguration().GetSection("ClientSecret").Value;
+        }
+
+        /// <summary>
+        /// Gets Page ID.
+        /// </summary>
+        /// <returns>The string reperesentation of Page ID.</returns>
+        public string GetPageId()
+        {
+            return GetCurrentConfiguration().GetSection("PageId").Value;
         }
     }
 }
