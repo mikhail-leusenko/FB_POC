@@ -76,13 +76,15 @@ the collection of users to authenticate into the application. Contains several s
 
 The common block structure is: 
 
-"user_first_name": { 
-	"First Name": "user_first_name", \
-	"Last Name": "user_last_name", \
-	"Email": "user_email", \
-	"Password": "user_password", \
-	"Id": "user_id" \
+```
+"user_first_name": {
+	"First Name": "user_first_name",
+	"Last Name": "user_last_name",
+	"Email": "user_email",
+	"Password": "user_password",
+	"Id": "user_id"
 }
+```
 
 Take into account that in current implementation you should specify the user's First name as a name of the appropriate block (see current appsettings.json in UI project). Email and Password values are using for login into the Facebook. Id value is used by API to allow interactions with Page content.
 
