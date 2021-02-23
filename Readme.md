@@ -40,11 +40,11 @@ The main purpose of the test users is to interact with all available features of
 
 The good decision will be to add all required permissions for created user right after its creation to avoid the time wasting in future. For example, if you need to make CRUD operations with Page posts, you need to set the next permissions:
 
-pages_show_list
-pages_messaging
-pages_read_engagement
-pages_manage_posts
-public_profile (is set by default for test users). 
+pages_show_list \
+pages_messaging \
+pages_read_engagement \
+pages_manage_posts \
+public_profile (is set by default for test users). \ 
 
 Each API endpoint has the description of required user permissions.
 
@@ -77,11 +77,11 @@ the collection of users to authenticate into the application. Contains several s
 The common block structure is: 
 
 "user_first_name": { 
-	"First Name": "user_first_name", 
-	"Last Name": "user_last_name", 
-	"Email": "user_email", 
-	"Password": "user_password", 
-	"Id": "user_id" 
+	"First Name": "user_first_name", \
+	"Last Name": "user_last_name", \
+	"Email": "user_email", \
+	"Password": "user_password", \
+	"Id": "user_id" \
 }
 
 Take into account that in current implementation you should specify the user's First name as a name of the appropriate block (see current appsettings.json in UI project). Email and Password values are using for login into the Facebook. Id value is used by API to allow interactions with Page content.
