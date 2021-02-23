@@ -1,3 +1,3 @@
-[a relative link](01-General information.md)
-[a relative link](02-Get started.md)
-[a relative link](03-Configure test projects.md)
+[a relative link](01-General_info.md)
+[a relative link](02-Get_started.md)
+[a relative link](03-Configure_test_projects.md)
