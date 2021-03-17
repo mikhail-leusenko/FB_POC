@@ -17,6 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facebook.POC.UI", "Facebook
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39E5E826-F9F3-4036-AEA1-E42158479ACE}"
 	ProjectSection(SolutionItems) = preProject
+		01-General_info.md = 01-General_info.md
+		02-Get_started.md = 02-Get_started.md
+		03-Configure_test_projects.md = 03-Configure_test_projects.md
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
